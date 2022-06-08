@@ -2,40 +2,27 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import json
-from flask_migrate import Migrate
+from flask_migrate import Migrate 
+#from settings import DB_NAME
 
 
-app = Flask(__name__)
-
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-DATABASE_NAME = "movies"
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///{}".format(
-    DATABASE_NAME)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app, session_options={"expire_on_commit": False})
-# TODO: connect to a local postgresql database
-migrate = Migrate(app, db)
+db_NAME = os.environ['DB_NAME']
+database_path = "postgresql:///{}".format(db_NAME)
+db = SQLAlchemy()
+# migrate = Migrate()
 
 
-# #after test successfully, lets switch to setup.sh
-# database_name = "movies"
-# #url = 'localhost:5432'
-
-# database_path = "postgresql:///{}".format(database_name)
-# db = SQLAlchemy()
-
-
-# '''
-# setup_db(app)
-#     binds a flask application and a SQLAlchemy service
-# '''
-# def setup_db(app, database_path=database_path):
-#     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
-#     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-#     db.app = app  
-#     db.init_app(app)
-#     db.create_all()
+'''
+setup_db(app)
+    binds a flask application and a SQLAlchemy service
+'''
+def setup_db(app, database_path=database_path):
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    db.app = app  
+    db.init_app(app)
+    # migrate.init_app(app, db)
+    db.create_all()
 
 
 '''
