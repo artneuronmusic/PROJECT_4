@@ -1,9 +1,12 @@
 import os
 from flask_moment import Moment
-from flask import Flask, request, abort, jsonify, abort, request
+from flask import jsonify, abort, request
+from functools import wraps
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from models import app, db, Movies, Castings, Collections
+from auth import AuthError, requires_auth
+
 
 import json
 import sys
@@ -13,12 +16,14 @@ moment = Moment(app)
 db.init_app(app)
 
 
+
 @app.route('/')
 def index():
-  return "Hello World!"
+  return "Welcome to the last project "
 
 @app.route('/movies', methods=['GET'])
-def get_movies_list():
+@requires_auth('get:movies')
+def get_movies_list(payload):
   list_movies = Movies.query.order_by('id').all()
   movies_details = [i.format() for i in list_movies]
   
@@ -30,7 +35,8 @@ def get_movies_list():
   })
 
 @app.route('/castings', methods=['GET'])
-def get_castings_list():
+@requires_auth('get:castings')
+def get_castings_list(payload):
   list_castings = Castings.query.order_by('id').all()
   castings_details = [i.format() for i in list_castings]
   
@@ -42,7 +48,8 @@ def get_castings_list():
   })
 
 @app.route('/movies/create', methods=['POST'])
-def post_movie():
+@requires_auth('post:movie')
+def post_movie(payload):
   body = request.get_json()
   try:
     movie_title = body.get('title', None)
@@ -59,7 +66,8 @@ def post_movie():
 
 
 @app.route('/castings/create', methods=['POST'])
-def post_casting():
+@requires_auth('post:casting')
+def post_casting(payload):
   body = request.get_json()
   try:
     casting_name = body.get('name', None)
@@ -74,13 +82,13 @@ def post_casting():
     
     new_casting_list.insert()
     
-
     return jsonify({"success": True})
   except:
     abort(422)
 
 @app.route('/movies/<int:movie_id>/edit', methods=['PATCH'])
-def update_movie(movie_id):
+@requires_auth('patch:movie')
+def update_movie(payload, movie_id):
   movie = Movies.query.filter(Movies.id==movie_id).one_or_none()
   print(movie.title)
   body = request.get_json()
@@ -97,7 +105,8 @@ def update_movie(movie_id):
     abort(422)
 
 @app.route('/castings/<int:casting_id>/edit', methods=['PATCH'])
-def update_castings(casting_id):
+@requires_auth('patch:casting')
+def update_castings(payload, casting_id):
   casting = Castings.query.filter(Castings.id==casting_id).one_or_none()
   body = request.get_json()
   try:
@@ -113,21 +122,24 @@ def update_castings(casting_id):
   except:
     abort(422)
 
-@app.route('/movies/<int:movie_id>', methods=['DELETE'])
-def delete_movie(movie_id):
+@app.route('/castings/<int:casting_id>', methods=['DELETE'])
+@requires_auth('patch:casting')
+def delete_casting(payload, casting_id):
   try:
-    movie = Movies.query.filter(Movies.id==movie_id).one_or_none()
-    movie.delete()
+    casting = Castings.query.filter(Castings.id==casting_id).one_or_none()
+    casting.delete()
     return jsonify({"success": True})
 
   except:
      abort(400)
 
-@app.route('/castings/<int:casting_id>', methods=['DELETE'])
-def delete_casting(casting_id):
+
+@app.route('/movies/<int:movie_id>', methods=['DELETE'])
+@requires_auth('delete:movies')
+def delete_movie(payload, movie_id):
   try:
-    casting = Castings.query.filter(Castings.id==casting_id).one_or_none()
-    casting.delete()
+    movie = Movies.query.filter(Movies.id==movie_id).one_or_none()
+    movie.delete()
     return jsonify({"success": True})
 
   except:
