@@ -1,1 +1,49 @@
+Capstone #Backend and Full Stack
+
+Udacity Final project: Capstone 
+
+The purpose of the project is simply to show the capability of building an application from the beginning, which includes collecting data, buidling model for model, connecting API in order to work with server, getting acces and identity for authorization, and testing, to the last step: deployment.
+
+
+The projects is not perfectly designed but creating a good model/prototype for who is interested in building their own application with python.
+
+Tasks
+1. To build database model which includes casting agency(casting name, age, gender) and movie publication info (movie title, release date); data sample is stored in the directory: starter.
+
+2. To check those endpoints(GET, DELETE, POST, PATCH) working with database.
+
+3. To assign permissions for three roles(RBAC): Casting Assistant, Casting Director, and Executive Producer
+
+4. To test the project, can be POSTMAN, or unittest
+
+5. To deploy it through Heroku
+
+Installing Dependencies
+1. Python 3.7
+2. Virtual Environment (Virtual Box is fine)
+3. Install dependencies by: pip install -r requirements.txt
+4. psql movies < movies.sql
+5. brew tap heroku/brew && brew install heroku
+
+Set up environment variables
+1. touch setup.sh
+
+Running the server and unittest
+
+
+Python3 app.py
+
+Python3 test_flasks.py
+
+
+
+Deploying with Heroku
+
+
+
+
 Single-database configuration for Flask.
+createdb movies
+psql movies < movies.sql
+# run tests
+dropdb movies

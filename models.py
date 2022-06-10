@@ -3,13 +3,11 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import json
 from flask_migrate import Migrate 
-#from settings import DB_NAME
+from settings import DB_NAME
 
-
-db_NAME = os.environ['DB_NAME']
-database_path = "postgresql:///{}".format(db_NAME)
+database_path = "postgresql:///{}".format(DB_NAME)
 db = SQLAlchemy()
-# migrate = Migrate()
+migrate = Migrate()
 
 
 '''
@@ -21,7 +19,7 @@ def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app  
     db.init_app(app)
-    # migrate.init_app(app, db)
+    migrate.init_app(app, db)
     db.create_all()
 
 
@@ -32,7 +30,7 @@ class Movies(db.Model):
     __tablename__ = 'movielist'
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(120), nullable=False)
+    title = db.Column(db.String(120), nullable=False, unique=True)
     release_date = db.Column(db.Date)
     movie_casting = db.relationship("Castings", secondary="collections", back_populates='castings_movie', lazy='dynamic')
 
@@ -63,7 +61,7 @@ class Castings(db.Model):
     __tablename__ = 'castinglist'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), nullable=False)
+    name = db.Column(db.String(120), nullable=False, unique=True)
     age = db.Column(db.Integer)
     gender = db.Column(db.String(120))
     castings_movie = db.relationship("Movies", secondary="collections", back_populates='movie_casting', lazy='dynamic')
