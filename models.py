@@ -1,31 +1,17 @@
-import os
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import json
-from flask_migrate import Migrate 
 from settings import DB_NAME
 
 database_path = "postgresql:///{}".format(DB_NAME)
 db = SQLAlchemy()
-migrate = Migrate()
 
-
-'''
-setup_db(app)
-    binds a flask application and a SQLAlchemy service
-'''
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app  
     db.init_app(app)
-    migrate.init_app(app, db)
     db.create_all()
 
 
-'''
-Data
-'''
 class Movies(db.Model):
     __tablename__ = 'movielist'
 

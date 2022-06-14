@@ -1,23 +1,15 @@
 import os
-from flask import Flask, jsonify, abort, request
-from functools import wraps
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, jsonify, abort, request 
 from flask_cors import CORS
 from models import setup_db, Movies, Castings
-from auth import AuthError, requires_auth
-import json
-import sys
+from auth import requires_auth
 
+app = Flask(__name__)
 
 def create_app(test_config=None):
-  app = Flask(__name__)
+  #app = Flask(__name__)
   setup_db(app)
   CORS(app)
-  
-
-  # @app.route('/')
-  # def index():
-  #   return "Welcome to the last project "
 
   @app.route('/movies', methods=['GET'])
   @requires_auth('get:movies')
@@ -54,7 +46,6 @@ def create_app(test_config=None):
   def post_movie(payload):
     
     body = request.get_json()
-    # try:
     movie_title = body.get('title', None)
     movie_release = body.get('release_date', None)
     if not movie_title or not movie_release:
@@ -203,7 +194,3 @@ APP = create_app()
 if __name__ == '__main__':
     APP.run(host='0.0.0.0', port=8080, debug=True)
 
-# if __name__ == '__main__':
-#     APP.run(host='0.0.0.0', port=8080, debug=True)
-
-#curl -d '{"title": "John Wick: Chapter 2", "release_date": "2017-06-13"}' -H "Content-Type: application/json" -X POST http://0.0.0.0:8080/movies/create 

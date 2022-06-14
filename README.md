@@ -50,7 +50,7 @@ cd /vagrant
 
 ```
 pip install virtualenv
-python -m virtualenv env
+python3 -m virtualenv env
 source env/bin/activate
 ```
 

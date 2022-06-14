@@ -4,9 +4,7 @@ from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
 from settings import AUTH0_DOMAIN_SETTING, ALGORITHMS_SETTING, API_AUDIENCE_SETTING
-# AUTH0_DOMAIN = 'fsnd-coffeeshop-udacity.us.auth0.com'
-# ALGORITHMS = ['RS256']
-# API_AUDIENCE = 'Capstone'
+
 #https://fsnd-coffeeshop-udacity.us.auth0.com/authorize?audience=Capstone&response_type=token&client_id=4xI59Nc5cJMw20YZuMqwOOAZy6GTqeSp&redirect_uri=http://127.0.0.1:8080/login_result
 AUTH0_DOMAIN = AUTH0_DOMAIN_SETTING
 ALGORITHMS = ALGORITHMS_SETTING
@@ -16,10 +14,8 @@ class AuthError(Exception):
         self.error = error
         self.status_code = status_code
 
-#get token
 def get_token_auth_header():
-    """Obtains the Access Token from the Authorization Header
-    """
+  
     auth = request.headers.get('Authorization', None)
    
     if not auth:
@@ -48,9 +44,8 @@ def get_token_auth_header():
         }, 401)
 
     token = parts[1]
-    #print("token", token)
     return token
-#decode token
+
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
@@ -118,10 +113,8 @@ def requires_auth(permission=''):
     def requires_auth_decorator(f):
         @wraps(f)
         def wrapper(*args, **kwargs):
-            #get token
             jwt = get_token_auth_header()
             try:
-                #verify and decode
                 payload = verify_decode_jwt(jwt)
             except:
                 abort(401)

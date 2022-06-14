@@ -1,4 +1,3 @@
-import os
 import unittest
 import json
 from flask_sqlalchemy import SQLAlchemy
@@ -9,10 +8,9 @@ from settings import DB_NAME, CASTING_ASSIS, CASTING_DIRECTOR, PRODUCER
 
 
 class TriviaTestCase(unittest.TestCase):
-    """This class represents the trivia test case"""
+
 
     def setUp(self):
-        """Define test variables and initialize app."""
         
         self.app = create_app()
         self.client = self.app.test_client

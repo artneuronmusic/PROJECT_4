@@ -5,6 +5,9 @@ __pycache__/
 .DS_Store
 .vagrant/
 # Ignore files related to API keys
-.env/
+env/
 .env
+include/
+share/
+
 
