@@ -5,7 +5,7 @@ from jose import jwt
 from urllib.request import urlopen
 from settings import AUTH0_DOMAIN_SETTING, ALGORITHMS_SETTING, API_AUDIENCE_SETTING
 
-#https://fsnd-coffeeshop-udacity.us.auth0.com/authorize?audience=Capstone&response_type=token&client_id=4xI59Nc5cJMw20YZuMqwOOAZy6GTqeSp&redirect_uri=http://127.0.0.1:8080/login_result
+#https://fsnd-coffeeshop-udacity.us.auth0.com/authorize?audience=Capstone&response_type=token&client_id=4xI59Nc5cJMw20YZuMqwOOAZy6GTqeSp&redirect_uri=http://127.0.0.1:8000
 AUTH0_DOMAIN = AUTH0_DOMAIN_SETTING
 ALGORITHMS = ALGORITHMS_SETTING
 API_AUDIENCE = API_AUDIENCE_SETTING
