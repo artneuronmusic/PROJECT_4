@@ -7,6 +7,7 @@ Vagrant.configure("2") do |config|
   #config.vm.network "forwarded_port", guest: 3306, host: 3306, host_ip: "127.0.0.1" # MySQL
   config.vm.network "forwarded_port", guest: 5432, host: 5432, host_ip: "127.0.0.1" # PostgreSQL
   config.vm.network "forwarded_port", guest: 8000, host: 8000, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 8080, host: 8080, host_ip: "127.0.0.1"
   #config.vm.network "forwarded_port", guest: 8081, host: 8081, host_ip: "127.0.0.1"
   #config.vm.network "forwarded_port", guest: 8082, host: 8082, host_ip: "127.0.0.1"
 
