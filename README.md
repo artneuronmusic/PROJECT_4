@@ -60,6 +60,7 @@ pip install SQLAlchemy
 pip install postgres
 pip install Flask
 pip install Flask-Migrate
+psql movies < movies.sql
 ```
 ```
 pip install -r requirements.txt    (actually, this step can be ignored, since the attached Vagrantfile in the project has the requirements.txt which helps to install those dependencies)
