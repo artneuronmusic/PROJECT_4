@@ -1,7 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
-from settings import DB_NAME
+from settings import DATABASE_URL_SETTING, DB_NAME
 
-database_path = "postgresql:///{}".format(DB_NAME)
+# database_path = "postgresql:///{}".format(DB_NAME)
+database_path = DATABASE_URL_SETTING
 db = SQLAlchemy()
 
 def setup_db(app, database_path=database_path):
