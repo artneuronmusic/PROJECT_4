@@ -6,7 +6,6 @@ from auth import requires_auth, AuthError
 
 app = Flask(__name__)
 
-
 def create_app(test_config=None):
     # reset the app for testing purpose
     app = Flask(__name__)
