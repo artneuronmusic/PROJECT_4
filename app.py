@@ -2,7 +2,7 @@ import os
 from flask import Flask, jsonify, abort, request
 from flask_cors import CORS
 from models import setup_db, Movies, Castings
-from auth import requires_auth
+from auth import requires_auth, AuthError
 
 app = Flask(__name__)
 
@@ -151,6 +151,12 @@ def create_app(test_config=None):
 
         except BaseException:
             abort(400)
+
+    @app.errorhandler(AuthError)
+    def handle_auth_error(ex):
+        response = jsonify(ex.error)
+        response.status_code = ex.status_code
+        return response
 
     @app.errorhandler(404)
     def not_found(error):
