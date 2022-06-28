@@ -12,8 +12,6 @@ This app requires to use PostgreSQL database, SqlAlchemy, Flask and Heroku in th
 * Checking Authorization for different users and roles
 * Deploying it
 
-
-
 ## Tech Stack (Dependencies)
 
 ### 1. Required Dependencies for Backend
@@ -34,8 +32,12 @@ Our tech stack will include the following:
   ├── config.py *** Database URLs, CSRF generation, etc
   ├── error.log
   ├── models.py *** database
-  ├── auth.py set up for checking authentification and token
+  ├── auth.py *** set up for checking authentification and token
   ├── requirements.txt *** The dependencies we need to install with "pip3 install -r requirements.txt"
+  ├── test_flasks.py *** test the authorization and permission from three different roles: casting assistant, casting director, and product executive, use "python3 test_flasks.py"
+  ├── manage.py *** deal with migration
+  ├── movies.sql *** optional data for testing use 1. "dropdb movies" 2. "createdb movies" 3."psql movies < movie.sql"
+  ├── setting.py *** assign variales to local 
 
   ```
 ### 3. **Initialize and activate a virtualenv using:**
@@ -96,8 +98,54 @@ cd /vagrant
 python3 app.py
 ```
 
-7. **Verify on the Browser**<br>
-Navigate to project homepage [http://127.0.0.1:8000/](http://127.0.0.1:8000/) or [http://localhost:8000](http://localhost:8000) 
+7. **End points and Roles(Permissions)**
+Create a new Auth0 Account
+Select a unique tenant domain
+Create a new, single page web application
+Create a new API
+   - in API Settings:
+     - Enable RBAC
+     - Enable Add Permissions in the Access Token
+Create new API permissions:
+  - `get:castings`
+  - `get:movies`
+  - `post:casting`
+  - `post:movie`
+  - `patch:casting`
+  - `patch:movie`
+  - `delete:casting`
+  - `delete:movies`
+
+Create new roles for:
+  - Casting Assistant
+     - can `get:castings`
+     - can `get:movies`
+  - Casting Director
+      - `get:castings`
+      - `get:movies`
+      - `post:casting`
+      - `patch:casting`
+      - `patch:movie`
+      - `delete:casting`
+  - Producer
+      - `get:castings`
+      - `get:movies`
+      - `post:casting`
+      - `post:movie`
+      - `patch:casting`
+      - `patch:movie`
+      - `delete:casting`
+      - `delete:movies`
+    
+Endpoints
+   - GET '/movies'
+   - GET '/castings'
+   - POST '/movies'
+   - POST '/castings'
+   - PATCH '/castings/<int:casting_id>'
+   - PATCH '/movies/<int:movie_id>'
+   - DELETE '/castings/<int:casting_id>'
+   - DELETE '/movies/<int:movie_id>'
 
 ## Testing
 8. **Unittest Test:**
@@ -105,8 +153,19 @@ Navigate to project homepage [http://127.0.0.1:8000/](http://127.0.0.1:8000/) or
 python3 test_flasks.py
 ```
 
+## 
+10. **PEP 8 style guide:**
+```
+pip install pycodestyle
+pycodestyle .
+pip install --upgrade autopep8
+autopep8 --in-place --aggressive --aggressive <filename>
+
+```
+
+
 ## Deployment
-9. **Deploying through Heroku:**
+10. **Deploying through Heroku:**
 ```
 brew tap heroku/brew && brew install heroku
 heroku login  --> input your info according the requirments

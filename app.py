@@ -6,6 +6,7 @@ from auth import requires_auth, AuthError
 
 app = Flask(__name__)
 
+
 def create_app(test_config=None):
     # reset the app for testing purpose
     app = Flask(__name__)
@@ -30,6 +31,9 @@ def create_app(test_config=None):
     @app.route('/castings', methods=['GET'])
     @requires_auth('get:castings')
     def get_castings_list(payload):
+        print("------")
+        print(payload)
+        print("------")
 
         list_castings = Castings.query.order_by('id').all()
         castings_details = [i.format() for i in list_castings]

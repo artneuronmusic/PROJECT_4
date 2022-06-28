@@ -1,23 +1,14 @@
 from dotenv import load_dotenv
+from pathlib import Path
 import os
-load_dotenv()
-DB_NAME = os.environ.get("DB_NAME")
-PRODUCER = os.environ.get("PRODUCER")
-CASTING_ASSIS = os.environ.get("CASTING_ASSIS")
-CASTING_DIRECTOR = os.environ.get("CASTING_DIRECTOR")
-AUTH0_DOMAIN_SETTING = os.environ.get('AUTH0_DOMAIN_SETTING')
-ALGORITHMS_SETTING = os.environ.get('ALGORITHMS_SETTING')
-API_AUDIENCE_SETTING = os.environ.get('API_AUDIENCE_SETTING')
-DATABASE_URL_SETTING = os.environ.get('DATABASE_URL')
 
-# DB_USER = os.environ.get("DB_USER")
-# DB_PASSWORD = os.environ.get("DB_PASSWORD")
-
-
-"""
-or use the below
-from decouple import config
-
-API_USERNAME = config('USER')
-API_KEY = config('KEY')
-"""
+env_path = Path('.', '.env')
+load_dotenv(dotenv_path=env_path)
+DB_NAME = os.getenv('DB_NAME')
+AUTH0_DOMAIN_SETTING = os.getenv('AUTH0_DOMAIN_SETTING')
+ALGORITHMS_SETTING = os.getenv('ALGORITHMS_SETTING')
+API_AUDIENCE_SETTING = os.getenv('API_AUDIENCE_SETTING')
+DATABASE_URL_SETTING = os.getenv('DATABASE_URL')
+PRODUCER = os.getenv('PRODUCER')
+CASTING_ASSIS = os.getenv('CASTING_ASSIS')
+CASTING_DIRECTOR = os.getenv('CASTING_DIRECTOR')
