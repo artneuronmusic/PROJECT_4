@@ -1,6 +1,6 @@
 from cmath import e
 import json
-from flask import request, abort, jsonify, _request_ctx_stack
+from flask import request, abort
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
@@ -11,7 +11,6 @@ from settings import AUTH0_DOMAIN_SETTING, ALGORITHMS_SETTING, \
 AUTH0_DOMAIN = AUTH0_DOMAIN_SETTING
 ALGORITHMS = ALGORITHMS_SETTING
 API_AUDIENCE = API_AUDIENCE_SETTING
-
 
 class AuthError(Exception):
     def __init__(self, error, status_code):

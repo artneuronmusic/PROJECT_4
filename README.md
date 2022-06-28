@@ -25,20 +25,17 @@ Our tech stack will include the following:
 
 ### 2. Main Files: Project Structure
 
-  ```sh
+  ```
   ├── README.md
   ├── app.py *** use "python app.py" to run after installing dependencies
-                    
   ├── config.py *** Database URLs, CSRF generation, etc
-  ├── error.log
-  ├── models.py *** database
+  ├── models.py *** Database Models
   ├── auth.py *** set up for checking authentification and token
   ├── requirements.txt *** The dependencies we need to install with "pip3 install -r requirements.txt"
   ├── test_flasks.py *** test the authorization and permission from three different roles: casting assistant, casting director, and product executive, use "python3 test_flasks.py"
   ├── manage.py *** deal with migration
   ├── movies.sql *** optional data for testing use 1. "dropdb movies" 2. "createdb movies" 3."psql movies < movie.sql"
   ├── setting.py *** assign variales to local 
-
   ```
 ### 3. **Initialize and activate a virtualenv using:**
 ```
@@ -47,10 +44,7 @@ brew cask install vagrant
 vagrant init
 vagrant up
 vagrant ssh
-```
 cd /vagrant
-
-```
 pip install virtualenv
 python3 -m virtualenv env
 source env/bin/activate
@@ -64,6 +58,7 @@ pip install Flask
 pip install Flask-Migrate
 psql movies < movies.sql
 ```
+
 ```
 pip install -r requirements.txt    (actually, this step can be ignored, since the attached Vagrantfile in the project has the requirements.txt which helps to install those dependencies)
 ```
@@ -160,7 +155,6 @@ pip install pycodestyle
 pycodestyle .
 pip install --upgrade autopep8
 autopep8 --in-place --aggressive --aggressive <filename>
-
 ```
 
 
@@ -169,11 +163,10 @@ autopep8 --in-place --aggressive --aggressive <filename>
 ```
 brew tap heroku/brew && brew install heroku
 heroku login  --> input your info according the requirments
-pip freeze > requirements.txt
-touch setup.sh   -->set up all of your environment variables here
+heroku create name_of_your_app
+git remote add heroku heroku_git_url
+heroku addons:create heroku-postgresql:hobby-dev --app name_of_your_application
+heroku config --app name_of_your_application
+git push heroku master
+heroku run python manage.py db upgrade --app name_of_your_application
 ```
-
-
-
-
-
