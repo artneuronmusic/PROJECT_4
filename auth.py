@@ -8,12 +8,6 @@ from flask_cors import cross_origin
 from settings import AUTH0_DOMAIN_SETTING, ALGORITHMS_SETTING, \
     API_AUDIENCE_SETTING
 
-#https://capstone-project-2022-udacity.herokuapp.com/
-#https://capstone-project-2022-udacity.herokuapp.com/login_result
-# // https://fsnd-coffeeshop-udacity.us.auth0.com/authorize?audience=Capstone&scope=SCOPE&response_type=token&client_id=4xI59Nc5cJMw20YZuMqwOOAZy6GTqeSp&redirect_uri=https://capstone-project-2022-udacity.herokuapp.com/
-
-#https://fsnd-coffeeshop-udacity.us.auth0.com/authorize?audience=Capstone&scope=SCOPE&response_type=token&client_id=4xI59Nc5cJMw20YZuMqwOOAZy6GTqeSp&redirect_uri=http://localhost:8080/
-
 AUTH0_DOMAIN = AUTH0_DOMAIN_SETTING
 ALGORITHMS = ALGORITHMS_SETTING
 API_AUDIENCE = API_AUDIENCE_SETTING
@@ -151,7 +145,7 @@ def requires_auth(permission=''):
                 payload = verify_decode_jwt(jwt)
             except BaseException as e:
                 raise e
-                
+
             check_permissions(permission, payload)
             return f(payload, *args, **kwargs)
         return wrapper
